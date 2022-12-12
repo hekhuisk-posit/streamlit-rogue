@@ -429,7 +429,7 @@ with st.sidebar:
     )
     st.markdown("<br>", unsafe_allow_html=True)
     st.caption(
-        "Streamlit Rogue v0.1- inspired by Rogue (also known as Rogue: Exploring the Dungeons of Doom) a dungeon crawling video game by Michael Toy and Glenn Wichman with later contributions by Ken Arnold. Rogue was originally developed around 1980 for Unix-based mainframe systems as a freely distributed executable. It was later included in the official Berkeley Software Distribution 4.2 operating system (4.2BSD)."
+        "The Shadow's Den v0.1- inspired by Rogue (also known as Rogue: Exploring the Dungeons of Doom) a dungeon crawling video game by Michael Toy and Glenn Wichman with later contributions by Ken Arnold. Rogue was originally developed around 1980 for Unix-based mainframe systems as a freely distributed executable. It was later included in the official Berkeley Software Distribution 4.2 operating system (4.2BSD)."
     )
 
     # "C": "&#x2591;",
