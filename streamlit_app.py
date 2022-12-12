@@ -319,7 +319,7 @@ if (
         st.session_state["backpack"]["gold"] = st.session_state["backpack"]["gold"] + 10
 
     if Interaction("M") == True:
-        damage = randrange(st.session_state["hero_stats"]["max_hp"]) + 100
+        damage = randrange(st.session_state["hero_stats"]["max_hp"])
         st.write("fight with monster")
         st.session_state["hero_stats"]["hp"] = (
             st.session_state["hero_stats"]["hp"] - damage
@@ -362,10 +362,13 @@ if st.session_state["ending_condition"] == True:
     display_html.empty()
     if st.session_state["hero_stats"]["hp"] > 0:
         display_html = st.markdown(
-            "You have reached to the end of the dungeon", unsafe_allow_html=True
+            "You have reached to the end of the dungeon. Thank you for playing The Shadow's Den",
+            unsafe_allow_html=True,
         )
     if st.session_state["hero_stats"]["hp"] <= 0:
-        display_html = st.markdown("Unfortunately, you died", unsafe_allow_html=True)
+        display_html = st.markdown(
+            "Unfortunately, you died. Please restart the game.", unsafe_allow_html=True
+        )
 
 # ---------------- user console :-) ----------------
 
