@@ -221,7 +221,12 @@ if "level_before_move" not in st.session_state:
 display_html = st.empty()
 html = level_renderer(st.session_state["level"])  # chamber_renderer(size)
 
-if not st.session_state["ending_condition"]:
+if not st.session_state["ending_condition"] and not (
+    st.session_state.left_clicked
+    or st.session_state.right_clicked
+    or st.session_state.up_clicked
+    or st.session_state.down_clicked
+):
     display_html.markdown(html, unsafe_allow_html=True)
 
 #######################################################
