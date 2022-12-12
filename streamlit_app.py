@@ -31,6 +31,12 @@ def fetch_data():
     return df
 
 
+# external css
+def local_css(file_name):
+    with open(file_name) as f:
+        st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+
+
 # level renderer
 
 tileset = {
@@ -168,6 +174,12 @@ if "gold" not in st.session_state:
 #       MAIN GAME CODE
 #
 #################################
+
+# ---------------- CSS ----------------
+
+local_css("style.css")
+
+# ---------------- data ----------------
 
 df = fetch_data()
 
@@ -358,24 +370,14 @@ st.caption(
 )
 
 
-st.markdown(
-    """
-<style>
-/*center metric label*/
-div[data-testid="stVerticalBlock"] {
-    gap: 0px;
-}
+# st.markdown(
+#     """
+# <style>
 
-
-p {
- font-size: 14px;
- line-height: 16px;
- font-family: "Courier New", Courier, monospace;
-}
-</style>
-""",
-    unsafe_allow_html=True,
-)
+# </style>
+# """,
+#     unsafe_allow_html=True,
+# )
 
 
 # https://www.ee.ucl.ac.uk/~mflanaga/java/HTMLandASCIItableC1.html

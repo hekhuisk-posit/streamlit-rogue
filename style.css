@@ -1,0 +1,27 @@
+/*center metric label*/
+div[data-testid="stVerticalBlock"] {
+    gap: 0px;
+}
+
+
+p {
+ font-size: 14px;
+ line-height: 16px;
+ font-family: "Courier New", Courier, monospace;
+}
+
+@media all and (max-height: 1000px) {
+    p {
+         font-size: 12px;
+ 	 line-height: 14px;
+    }
+
+}
+
+@media all and (max-height: 800px) {
+    p {
+         font-size: 10px;
+ 	 line-height: 12px;
+    }
+
+}
