@@ -5,6 +5,8 @@ import time
 import pandas as pd
 from random import randrange
 
+st.set_page_config(page_title="The Shadows’s Den", page_icon="🗡️")
+
 # ---------------- callbacks ----------------
 
 
