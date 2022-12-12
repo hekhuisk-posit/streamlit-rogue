@@ -23,5 +23,7 @@ p {
          font-size: 10px;
  	 line-height: 12px;
     }
-
 }
+
+.appview-container .main .block-container{ padding-top: 2.875rem; padding-bottom: 0px}
+
