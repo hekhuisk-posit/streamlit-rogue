@@ -97,15 +97,15 @@ tileset_movable = {
 move_directions = ["l", "r", "u", "d"]
 
 
-def move(inital_level, direction, who):
+def move(inital_level, direction, who, i):
 
     # where is the player?
     k = np.where(inital_level == who)
 
     # check if we have anything to return (important for non-player)
     if any(k[0]):
-        from_top = k[0][0]
-        from_left = k[1][0]
+        from_top = k[0][i]
+        from_left = k[1][i]
         # st.write(k)
 
         # let's copy input array and remove player
@@ -275,18 +275,25 @@ def interaction(game_object):
     return result
 
 
-def object_position(game_object):
+def object_position(game_object, i):
     # actual position of the player
     k = np.where(st.session_state["level"] == game_object)
 
     if any(k[0]):
         # st.write(k)
-        from_top = k[0][0]
-        from_left = k[1][0]
-        postion = [k[0][0], k[1][0]]
+        # from_top = k[0][i]
+        # from_left = k[1][i]
+        postion = [k[0][i], k[1][i]]
         return postion
     else:
         return [0, 0]
+
+
+def distance_from_player(a, b):
+    distance = (object_position("@", 0)[0] - a) ** 2 + (
+        object_position("@", 0)[1] - b
+    ) ** 2
+    return distance
 
 
 # ---------------- if button or key pressed move player ----------------
@@ -294,22 +301,22 @@ def object_position(game_object):
 if st.session_state.left_clicked and not st.session_state["ending_condition"]:
     # status = st.write(move(df.values, "left"))  # st.write("left")
 
-    st.session_state["level"] = move(st.session_state["level"], "l", "@").copy()
+    st.session_state["level"] = move(st.session_state["level"], "l", "@", 0).copy()
 
 if st.session_state.right_clicked and not st.session_state["ending_condition"]:
     # status = st.write(move(df.values, "left"))  # st.write("left")
 
-    st.session_state["level"] = move(st.session_state["level"], "r", "@").copy()
+    st.session_state["level"] = move(st.session_state["level"], "r", "@", 0).copy()
 
 if st.session_state.up_clicked and not st.session_state["ending_condition"]:
     # status = st.write(move(df.values, "left"))  # st.write("left")
 
-    st.session_state["level"] = move(st.session_state["level"], "u", "@").copy()
+    st.session_state["level"] = move(st.session_state["level"], "u", "@", 0).copy()
 
 if st.session_state.down_clicked and not st.session_state["ending_condition"]:
     # status = st.write(move(df.values, "left"))  # st.write("left")
 
-    st.session_state["level"] = move(st.session_state["level"], "d", "@").copy()
+    st.session_state["level"] = move(st.session_state["level"], "d", "@", 0).copy()
 
 # ---------------- if button or key pressed interact and render graphics ----------------
 
@@ -323,19 +330,22 @@ if (
     # ---------------- helper function ----------------
     # refactor later - to proper x and y
     # refactor later - move somewhere else
-    def distance_from_player(a, b):
-        distance = (object_position("@")[0] - a) ** 2 + (
-            object_position("@")[1] - b
-        ) ** 2
-        return distance
 
     # ---------------- move boss ----------------
 
     calc_dist_aft_move = {
-        "l": distance_from_player(object_position("B")[0], object_position("B")[1] - 1),
-        "r": distance_from_player(object_position("B")[0], object_position("B")[1] + 1),
-        "u": distance_from_player(object_position("B")[0] - 1, object_position("B")[1]),
-        "d": distance_from_player(object_position("B")[0] + 1, object_position("B")[1]),
+        "l": distance_from_player(
+            object_position("B", 0)[0], object_position("B", 0)[1] - 1
+        ),
+        "r": distance_from_player(
+            object_position("B", 0)[0], object_position("B", 0)[1] + 1
+        ),
+        "u": distance_from_player(
+            object_position("B", 0)[0] - 1, object_position("B", 0)[1]
+        ),
+        "d": distance_from_player(
+            object_position("B", 0)[0] + 1, object_position("B", 0)[1]
+        ),
     }
 
     # st.session_state["level"] = move(
@@ -347,40 +357,52 @@ if (
             st.session_state["level"],
             min(calc_dist_aft_move, key=calc_dist_aft_move.get),
             "B",
+            0,
         ).copy()
     else:
         st.session_state["level"] = move(
-            st.session_state["level"],
-            move_directions[randrange(4)],
-            "B",
+            st.session_state["level"], move_directions[randrange(4)], "B", 0
         ).copy()
 
     # ---------------- move monster ----------------
 
-    # calculated distances after move
-    # left, right, up, down
-    calc_dist_aft_move = {
-        "l": distance_from_player(object_position("M")[0], object_position("M")[1] - 1),
-        "r": distance_from_player(object_position("M")[0], object_position("M")[1] + 1),
-        "u": distance_from_player(object_position("M")[0] - 1, object_position("M")[1]),
-        "d": distance_from_player(object_position("M")[0] + 1, object_position("M")[1]),
-    }
+    # check if any monsters left on the level
+    if any(np.where(st.session_state["level"] == "M")[0]):
 
-    # st.write(calc_dist_aft_move)
-    # st.write(min(calc_dist_aft_move, key=calc_dist_aft_move.get))
+        # calculate action for each monster
+        for i in range(len(np.where(st.session_state["level"] == "M")[0])):
 
-    if randrange(10) < 6:
-        st.session_state["level"] = move(
-            st.session_state["level"],
-            min(calc_dist_aft_move, key=calc_dist_aft_move.get),
-            "M",
-        ).copy()
-    else:
-        st.session_state["level"] = move(
-            st.session_state["level"],
-            move_directions[randrange(4)],
-            "M",
-        ).copy()
+            # calculated distances after move
+            # left, right, up, down
+            calc_dist_aft_move = {
+                "l": distance_from_player(
+                    object_position("M", i)[0], object_position("M", i)[1] - 1
+                ),
+                "r": distance_from_player(
+                    object_position("M", i)[0], object_position("M", i)[1] + 1
+                ),
+                "u": distance_from_player(
+                    object_position("M", i)[0] - 1, object_position("M", i)[1]
+                ),
+                "d": distance_from_player(
+                    object_position("M", i)[0] + 1, object_position("M", i)[1]
+                ),
+            }
+
+            # st.write(calc_dist_aft_move)
+            # st.write(min(calc_dist_aft_move, key=calc_dist_aft_move.get))
+
+            if randrange(10) < 6:
+                st.session_state["level"] = move(
+                    st.session_state["level"],
+                    min(calc_dist_aft_move, key=calc_dist_aft_move.get),
+                    "M",
+                    i,
+                ).copy()
+            else:
+                st.session_state["level"] = move(
+                    st.session_state["level"], move_directions[randrange(4)], "M", i
+                ).copy()
 
     # ---------------- graphic engine pt  2:-) ----------------
 
