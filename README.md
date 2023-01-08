@@ -7,4 +7,5 @@ www.rogue-rpg.streamlit.app
 Change log:
 
 08.01.2023
+- monsters are pursuing player
 - added second level
