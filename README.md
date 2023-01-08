@@ -2,7 +2,7 @@
 
 A proof of concept for using streamlit as a game engine for roguelike role-playing games.
 
-www.rogue-rpg.streamlit.app
+rogue-rpg.streamlit.app
 
 Change log:
 
