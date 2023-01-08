@@ -186,9 +186,6 @@ if "down_clicked" not in st.session_state:
 if "backpack" not in st.session_state:
     st.session_state["backpack"] = {"gold": 0}
 
-if "level_no" not in st.session_state:
-    st.session_state["level_no"] = 1
-
 if "hero_stats" not in st.session_state:
     st.session_state["hero_stats"] = {
         "hp": 20,
@@ -200,6 +197,12 @@ if "hero_stats" not in st.session_state:
 
 if "ending_condition" not in st.session_state:
     st.session_state["ending_condition"] = False
+
+if "level_no" not in st.session_state:
+    st.session_state["level_no"] = 1
+
+if "level_change" not in st.session_state:
+    st.session_state["level_change"] = False
 
 #######################################################
 #
@@ -216,11 +219,13 @@ local_css("style.css")
 # fetch level with certain number
 df = fetch_data("level" + str(st.session_state["level_no"]) + ".csv")
 
-if "level" not in st.session_state:
+if ("level" not in st.session_state) or st.session_state["level_change"]:
     st.session_state["level"] = df.values
+    st.session_state["level_change"] = False
 
-if "level_before_move" not in st.session_state:
+if ("level_before_move" not in st.session_state) or st.session_state["level_change"]:
     st.session_state["level_before_move"] = df.values
+    st.session_state["level_change"] = False
 
 # ---------------- graphic engine pt 1 :-) ----------------
 
@@ -244,7 +249,7 @@ if not st.session_state["ending_condition"] and not (
 # ---------------- function - check if player is interacting with something ----------------
 
 
-def Interaction(game_object):
+def interaction(game_object):
     # actual position of the player
     k = np.where(st.session_state["level"] == "@")
     # st.write(k)
@@ -320,16 +325,16 @@ if (
     display_html.empty()
     display_html = st.markdown(html, unsafe_allow_html=True)
 
-    if Interaction("D") == True:
+    if interaction("D") == True:
         # st.write(Door())
         st.write("door opened")
 
-    if Interaction("G") == True:
+    if interaction("G") == True:
         # st.write(Door())
         st.write("gold acquired")
         st.session_state["backpack"]["gold"] = st.session_state["backpack"]["gold"] + 10
 
-    if Interaction("M") == True:
+    if interaction("M") == True:
         damage = randrange(st.session_state["hero_stats"]["max_hp"])
         st.write("fight with monster")
         st.session_state["hero_stats"]["hp"] = (
@@ -340,7 +345,7 @@ if (
             st.session_state["hero_stats"]["kills"] + 1
         )
 
-    if Interaction("B") == True:
+    if interaction("B") == True:
         damage = randrange(st.session_state["hero_stats"]["max_hp"])
         st.write("fight with boss")
         st.session_state["hero_stats"]["hp"] = (
@@ -354,9 +359,13 @@ if (
     if st.session_state["hero_stats"]["hp"] <= 0:
         st.session_state["ending_condition"] = True
 
-    if Interaction("X") == True:
-        # st.session_state["level_no"] += 1
-        st.session_state["ending_condition"] = True
+    if interaction("X") == True:
+        if st.session_state["level_no"] == 2:
+            st.session_state["ending_condition"] = True
+        else:
+            st.session_state["level_no"] += 1
+            st.session_state["level_change"] = True
+            st.experimental_rerun()
 
     # ---------------- update new inital state of level ----------------
 
@@ -441,7 +450,7 @@ with st.sidebar:
     )
     st.markdown("<br>", unsafe_allow_html=True)
     st.caption(
-        "The Shadow's Den v0.1 - inspired by Rogue (also known as Rogue: Exploring the Dungeons of Doom) a dungeon crawling video game by Michael Toy and Glenn Wichman with later contributions by Ken Arnold. Rogue was originally developed around 1980 for Unix-based mainframe systems as a freely distributed executable. It was later included in the official Berkeley Software Distribution 4.2 operating system (4.2BSD)."
+        "The Shadow's Den v0.2 - inspired by Rogue (also known as Rogue: Exploring the Dungeons of Doom) a dungeon crawling video game by Michael Toy and Glenn Wichman with later contributions by Ken Arnold. Rogue was originally developed around 1980 for Unix-based mainframe systems as a freely distributed executable. It was later included in the official Berkeley Software Distribution 4.2 operating system (4.2BSD)."
     )
 
     # "C": "&#x2591;",
