@@ -7,5 +7,6 @@ A proof of concept for using streamlit as a game engine for roguelike role-playi
 Change log:
 
 08.01.2023
+- all monsters are moving
 - monsters are pursuing player
 - added second level
