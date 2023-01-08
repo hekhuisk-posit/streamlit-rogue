@@ -32,8 +32,8 @@ def down_callback():
 
 
 @st.cache
-def fetch_data():
-    df = pd.read_csv("Plansza.csv", sep=",", header=None)
+def fetch_data(level_name):
+    df = pd.read_csv(level_name, sep=",", header=None)
     return df
 
 
@@ -186,6 +186,9 @@ if "down_clicked" not in st.session_state:
 if "backpack" not in st.session_state:
     st.session_state["backpack"] = {"gold": 0}
 
+if "level_no" not in st.session_state:
+    st.session_state["level_no"] = 1
+
 if "hero_stats" not in st.session_state:
     st.session_state["hero_stats"] = {
         "hp": 20,
@@ -210,7 +213,8 @@ local_css("style.css")
 
 # ---------------- data ----------------
 
-df = fetch_data()
+# fetch level with certain number
+df = fetch_data("level" + str(st.session_state["level_no"]) + ".csv")
 
 if "level" not in st.session_state:
     st.session_state["level"] = df.values
@@ -351,6 +355,7 @@ if (
         st.session_state["ending_condition"] = True
 
     if Interaction("X") == True:
+        # st.session_state["level_no"] += 1
         st.session_state["ending_condition"] = True
 
     # ---------------- update new inital state of level ----------------
