@@ -189,10 +189,11 @@ if "backpack" not in st.session_state:
 if "hero_stats" not in st.session_state:
     st.session_state["hero_stats"] = {
         "hp": 20,
-        "max_hp": 20,
+        "max_hp": [20, 30, 50, 100],
         "exp": 0,
-        "lvl_exp": 10,
+        "lvl_exp": [15, 30, 50, 80],
         "kills": 0,
+        "player_level": 0,
     }
 
 if "ending_condition" not in st.session_state:
@@ -421,7 +422,11 @@ if (
         st.session_state["backpack"]["gold"] = st.session_state["backpack"]["gold"] + 10
 
     if interaction("M") == True:
-        damage = randrange(st.session_state["hero_stats"]["max_hp"])
+        damage = randrange(
+            st.session_state["hero_stats"]["max_hp"][
+                st.session_state["hero_stats"]["player_level"]
+            ]
+        )
         st.write("fight with monster")
         st.session_state["hero_stats"]["hp"] = (
             st.session_state["hero_stats"]["hp"] - damage
@@ -430,9 +435,16 @@ if (
         st.session_state["hero_stats"]["kills"] = (
             st.session_state["hero_stats"]["kills"] + 1
         )
+        st.session_state["hero_stats"]["exp"] = (
+            st.session_state["hero_stats"]["exp"] + 20
+        )
 
     if interaction("B") == True:
-        damage = randrange(st.session_state["hero_stats"]["max_hp"])
+        damage = randrange(
+            st.session_state["hero_stats"]["max_hp"][
+                st.session_state["hero_stats"]["player_level"]
+            ]
+        )
         st.write("fight with boss")
         st.session_state["hero_stats"]["hp"] = (
             st.session_state["hero_stats"]["hp"] - damage
@@ -489,7 +501,17 @@ st.caption(
     + str(st.session_state["backpack"]["gold"])
     + " Hp: "
     + str(st.session_state["hero_stats"]["hp"])
-    + "(20) Exp: 2/14"
+    + "("
+    + str(
+        st.session_state["hero_stats"]["max_hp"][
+            st.session_state["hero_stats"]["player_level"]
+        ]
+    )
+    + ")"
+    + " Exp: "
+    + str(st.session_state["hero_stats"]["exp"])
+    + " Player level: "
+    + str(st.session_state["hero_stats"]["player_level"])
     + " Monsters slayed: "
     + kills
 )
