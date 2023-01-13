@@ -465,6 +465,20 @@ if (
             st.session_state["level_change"] = True
             st.experimental_rerun()
 
+    # ---------------- level up ----------------
+
+    if (
+        st.session_state["hero_stats"]["exp"] > 20
+        and st.session_state["hero_stats"]["player_level"] == 0
+    ):
+        st.session_state["hero_stats"]["hp"] = min(
+            st.session_state["hero_stats"]["hp"] + 10,
+            st.session_state["hero_stats"]["hp"],
+        )
+        st.session_state["hero_stats"]["player_level"] = (
+            st.session_state["hero_stats"]["player_level"] + 1
+        )
+
     # ---------------- update new inital state of level ----------------
 
     st.session_state["level_before_move"] = st.session_state["level"]
