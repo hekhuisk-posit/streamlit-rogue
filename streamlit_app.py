@@ -103,7 +103,8 @@ def move(inital_level, direction, who, i):
     k = np.where(inital_level == who)
 
     # check if we have anything to return (important for non-player)
-    if any(k[0]):
+    # added k[0] lenght checking to take into account that monsters can attack each other
+    if any(k[0]) and i < len(k[0]):
         from_top = k[0][i]
         from_left = k[1][i]
         # st.write(k)
@@ -281,11 +282,12 @@ def object_position(game_object, i):
     k = np.where(st.session_state["level"] == game_object)
 
     if any(k[0]):
-        # st.write(k)
-        # from_top = k[0][i]
-        # from_left = k[1][i]
-        postion = [k[0][i], k[1][i]]
-        return postion
+        # added k[0] lenght checking to take into account that monsters can attack each other
+        if i < len(k[0]):
+            postion = [k[0][i], k[1][i]]
+            return postion
+        else:
+            return [0, 0]
     else:
         return [0, 0]
 
@@ -458,7 +460,7 @@ if (
         st.session_state["ending_condition"] = True
 
     if interaction("X") == True:
-        if st.session_state["level_no"] == 2:
+        if st.session_state["level_no"] == 3:
             st.session_state["ending_condition"] = True
         else:
             st.session_state["level_no"] += 1

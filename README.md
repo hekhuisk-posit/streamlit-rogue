@@ -6,6 +6,10 @@ A proof of concept for using streamlit as a game engine for roguelike role-playi
 
 Change log:
 
+14.01.2023
+- monsters can now fight with each other
+- added third level
+
 08.01.2023
 - all monsters are moving
 - monsters are pursuing player
