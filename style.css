@@ -31,6 +31,17 @@ p {
 }
 
 .gamegrid {
+    /* position: absolute; */
+
+    display: grid;
+    grid-template-columns: repeat(10, 16px);
+    grid-template-rows: repeat(10, 16px);
+    grid-gap: 0px;
+}
+
+.gamegrid2 {
+    /* position: absolute; */
+
     display: grid;
     grid-template-columns: repeat(10, 16px);
     grid-template-rows: repeat(10, 16px);
@@ -41,4 +52,9 @@ p {
 img {
     object-fit: cover;
     width: 100%;
+}
+
+container {
+    position: relative;
+
 }
