@@ -29,3 +29,16 @@ p {
     padding-top: 2.875rem;
     padding-bottom: 0px
 }
+
+.gamegrid {
+    display: grid;
+    grid-template-columns: repeat(50, 16px);
+    grid-template-rows: repeat(50, 16px);
+    grid-gap: 0px;
+}
+
+
+img {
+    object-fit: cover;
+    width: 100%;
+}
