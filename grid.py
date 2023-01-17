@@ -7,7 +7,9 @@ def local_css(file_name):
         st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
 
-st.set_page_config(page_title="The Shadows’s Den", page_icon="🗡️")
+st.set_page_config(
+    page_title="The Shadows’s Den 2", page_icon="🗡️", initial_sidebar_state="collapsed"
+)
 
 # ---------------- callbacks ----------------
 
