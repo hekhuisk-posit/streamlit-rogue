@@ -109,8 +109,45 @@ st.markdown(
         <img src="{floor_edge_3}" style="grid-column-start: 15; grid-row-start: 9;">
 
 
+        <img src="{wall_outer_n}" style="grid-column-start: 15; grid-row-start: 4;">
+        <img src="{wall_outer_n}" style="grid-column-start: 16; grid-row-start: 4;">
+        <img src="{wall_outer_n}" style="grid-column-start: 17; grid-row-start: 4;">
+        <img src="{wall_outer_n}" style="grid-column-start: 18; grid-row-start: 4;">
+
+        <img src="{wall}" style="grid-column-start: 15; grid-row-start: 5;">
+        <img src="{wall}" style="grid-column-start: 16; grid-row-start: 5;">
+        <img src="{wall}" style="grid-column-start: 17; grid-row-start: 5;">
+        <img src="{wall}" style="grid-column-start: 18; grid-row-start: 5;">
 
 
+        <img src="{floor_plain}" style="grid-column-start: 15; grid-row-start: 6;">
+        <img src="{floor_plain}" style="grid-column-start: 15; grid-row-start: 7;">
+        <img src="{floor_plain}" style="grid-column-start: 15; grid-row-start: 8;">
+        <img src="{floor_plain}" style="grid-column-start: 15; grid-row-start: 9;">
+        <img src="{floor_plain}" style="grid-column-start: 15; grid-row-start: 10;">
+
+        <img src="{floor_plain}" style="grid-column-start: 16; grid-row-start: 6;">
+        <img src="{floor_plain}" style="grid-column-start: 16; grid-row-start: 7;">
+        <img src="{floor_plain}" style="grid-column-start: 16; grid-row-start: 8;">
+        <img src="{floor_plain}" style="grid-column-start: 16; grid-row-start: 9;">
+        <img src="{floor_plain}" style="grid-column-start: 16; grid-row-start: 10;">
+
+        <img src="{floor_plain}" style="grid-column-start: 17; grid-row-start: 6;">
+        <img src="{floor_plain}" style="grid-column-start: 17; grid-row-start: 7;">
+        <img src="{floor_plain}" style="grid-column-start: 17; grid-row-start: 8;">
+        <img src="{floor_plain}" style="grid-column-start: 17; grid-row-start: 9;">
+        <img src="{floor_plain}" style="grid-column-start: 17; grid-row-start: 10;">
+
+        <img src="{floor_plain}" style="grid-column-start: 18; grid-row-start: 6;">
+        <img src="{floor_plain}" style="grid-column-start: 18; grid-row-start: 7;">
+        <img src="{floor_plain}" style="grid-column-start: 18; grid-row-start: 8;">
+        <img src="{floor_plain}" style="grid-column-start: 18; grid-row-start: 9;">
+        <img src="{floor_plain}" style="grid-column-start: 18; grid-row-start: 10;">
+
+        <img src="{floor_edge_3}" style="grid-column-start: 15; grid-row-start: 11;">
+        <img src="{floor_edge_3}" style="grid-column-start: 16; grid-row-start: 11;">
+        <img src="{floor_edge_3}" style="grid-column-start: 17; grid-row-start: 11;">
+        <img src="{floor_edge_3}" style="grid-column-start: 18; grid-row-start: 11;">
 
 
         <img src="{npc_palladin}" style="grid-column-start: {st.session_state["player_pos"]}; grid-row-start: 3;">
