@@ -1,4 +1,5 @@
 import streamlit as st
+import streamlit.components.v1 as components
 
 
 def local_css(file_name):
@@ -6,12 +7,36 @@ def local_css(file_name):
         st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
 
+st.set_page_config(page_title="The Shadows’s Den", page_icon="🗡️")
+
+# ---------------- callbacks ----------------
+
+
+def left_callback():
+    st.session_state["player_x"] -= 1
+
+
+def right_callback():
+    st.session_state["player_x"] += 1
+
+
+def up_callback():
+    st.session_state["player_y"] -= 1
+
+
+def down_callback():
+    st.session_state["player_y"] += 1
+
+
 # ---------------- CSS ----------------
 
 local_css("style.css")
 
-if "player_pos" not in st.session_state:
-    st.session_state["player_pos"] = 2
+if "player_x" not in st.session_state:
+    st.session_state["player_x"] = 3
+
+if "player_y" not in st.session_state:
+    st.session_state["player_y"] = 3
 
 
 wall = "https://thumbs2.imgbox.com/10/db/7zaxbIP8_t.png"
@@ -31,6 +56,8 @@ cat_down = "https://oshi.at/RrvJ/OaYF.gif"
 cat_jump = "https://oshi.at/qMZe/FhrD.gif"
 merchant = ("https://oshi.at/sgTa/Qpyr.gif",)
 npc_palladin = "https://oshi.at/nMCh/yKJe.png"
+monster_orc = "https://oshi.at/UCbC/VIJG.png"
+monster_ogre = "https://oshi.at/fqoK/sMTJ.png"
 st.markdown(
     f"""
         <div class="container">
@@ -150,8 +177,11 @@ st.markdown(
         <img src="{floor_edge_3}" style="grid-column-start: 18; grid-row-start: 11;">
 
 
-        <img src="{npc_palladin}" style="grid-column-start: {st.session_state["player_pos"]}; grid-row-start: 3;">
+
+        <img src="{npc_palladin}" class="player" style="grid-column-start: {st.session_state["player_x"]}; grid-row-start: {st.session_state["player_y"]};">
         
+        <img src="{monster_orc}" style="grid-column-start: 6; grid-row-start: 3;">
+
         <img src="{cat}" style="grid-column-start: 5; grid-row-start: 2;">
        
         
@@ -164,4 +194,54 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-st.session_state["player_pos"] += 1
+
+with st.sidebar:
+    st.write("Use keyboard arrows or buttons below")
+    st.markdown("<br>", unsafe_allow_html=True)
+    left_col, middle_col, right_col = st.columns([1, 1, 1])
+    with middle_col:
+        st.button("&nbsp;UP&nbsp;", on_click=up_callback, key="UP")
+    st.markdown("<br>", unsafe_allow_html=True)
+
+    left_col, middle_col, right_col = st.columns([1, 1, 1])
+    with left_col:
+        st.button("LEFT", on_click=left_callback, key="LEFT")
+
+    with right_col:
+        st.button("RIGHT", on_click=right_callback, key="RIGHT")
+    st.markdown("<br>", unsafe_allow_html=True)
+    left_col, middle_col, right_col = st.columns([1, 1, 1])
+    with middle_col:
+        st.button("DOWN", on_click=down_callback, key="DOWN")
+
+
+components.html(
+    """
+<script>
+const doc = window.parent.document;
+buttons = Array.from(doc.querySelectorAll('button[kind=secondary]'));
+const left_button = buttons.find(el => el.innerText === 'LEFT');
+const right_button = buttons.find(el => el.innerText === 'RIGHT');
+const up_button = buttons.find(el => el.innerText === String.fromCharCode(160)+'UP'+String.fromCharCode(160));
+const down_button = buttons.find(el => el.innerText === 'DOWN');
+doc.addEventListener('keydown', function(e) {
+switch (e.keyCode) {
+    case 37: // (37 = left arrow)
+        left_button.click();
+        break;
+    case 39: // (39 = right arrow)
+        right_button.click();
+        break;
+    case 38: // (39 = right arrow)
+        up_button.click();
+        break;
+    case 40: // (39 = right arrow)
+        down_button.click();
+        break;
+}
+});
+</script>
+""",
+    height=0,
+    width=0,
+)
