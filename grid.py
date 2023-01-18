@@ -1,6 +1,7 @@
 import streamlit as st
 import streamlit.components.v1 as components
 import pandas as pd
+import random
 
 
 def local_css(file_name):
@@ -67,15 +68,16 @@ def down_callback():
 local_css("style.css")
 
 if "player_x" not in st.session_state:
-    st.session_state["player_x"] = 5
+    st.session_state["player_x"] = 4
 
 if "player_y" not in st.session_state:
-    st.session_state["player_y"] = 7
+    st.session_state["player_y"] = 5
 
 tileset = {
     "@": "https://oshi.at/ZMUu/avRY.gif",
     "W": "https://thumbs2.imgbox.com/10/db/7zaxbIP8_t.png",  # wall
     "FP": "https://thumbs2.imgbox.com/29/22/5rTLr6WH_t.png",  # floor_plain
+    # "FP": "https://oshi.at/PQkn/ExtR.png",  # floor 1 tilset 2
     "CAT": "https://oshi.at/rSxZ/Znvx.gif",  # cat
     "M": "https://oshi.at/HXMd/VQUl.gif",  # monster, skeleton
     "FS": "https://thumbs2.imgbox.com/99/26/4m4rKZCS_t.png",
@@ -84,6 +86,8 @@ tileset = {
     "WON": "https://oshi.at/QwVn/Lotr.png",  # wall outer n
     "WOW": "https://oshi.at/ErrD/vUVT.png",  # wall outer w
     "WONW": "https://oshi.at/VhBU/UKur.png",  # wall_outer_nw
+    "DK": "https://oshi.at/GWHj/wtCk.png",  # darkness
+    "WMB": "https://oshi.at/GoQE/zfAw.png",  # wall missing brick
 }
 
 
@@ -95,10 +99,16 @@ def level_renderer(df, game_objects):
         # st.write(x)
         j = 0
         for y in x:
+
+            # if y == "FP" and random.uniform(0, 1) > 0.7:
+            #     tilset_tile = tileset["DK"]
+            # else:
+            #     tilset_tile = tileset[y]
+
             level_html = (
                 level_html
                 + '<img src="'
-                + tileset[y]
+                + tileset[y]  # tilset_tile
                 + '" style="grid-column-start: '
                 + str(j + 1)
                 + "; grid-row-start: "
@@ -117,7 +127,7 @@ if "level" not in st.session_state:  # or st.session_state["level_change"]:
     st.session_state["level"] = df.values
 
 
-game_objects = f"""<img src="{npc_palladin}" class="player" style="grid-column-start: {st.session_state["player_x"]}; grid-row-start: {st.session_state["player_y"]};"><img src="{skelet}" style="grid-column-start: 18; grid-row-start: 10;"><img src="{cat}" style="grid-column-start: 26; grid-row-start: 6;">"""
+game_objects = f"""<img src="{npc_palladin}" class="player" style="grid-column-start: {st.session_state["player_x"]}; grid-row-start: {st.session_state["player_y"]};"><img src="{skelet}" style="grid-column-start: 42; grid-row-start: 30;"><img src="{cat}" style="grid-column-start: 33; grid-row-start: 3;">"""
 
 
 html = level_renderer(st.session_state["level"], game_objects)
