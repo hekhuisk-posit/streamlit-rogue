@@ -43,6 +43,7 @@ npc_palladin = "https://oshi.at/ZMUu/avRY.gif"
 # monster_ogre = "https://oshi.at/fqoK/sMTJ.png"
 skelet = "https://oshi.at/HXMd/VQUl.gif"
 demon = "https://oshi.at/BrFn/dMIx.gif"
+chort = "https://oshi.at/AsVN/scbF.gif"
 
 # ---------------- callbacks ----------------
 
@@ -84,10 +85,21 @@ tileset = {
     "E": "data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==",
     "FE3": "https://oshi.at/KrDD/wYos.png",  # floor_edge_3
     "WON": "https://oshi.at/QwVn/Lotr.png",  # wall outer n
+    "WOE": "https://oshi.at/zesd/TsDF.png",  # wall outer e
+    "WONE": "https://oshi.at/qhqi/XliL.png",  # wall outer ne
     "WOW": "https://oshi.at/ErrD/vUVT.png",  # wall outer w
     "WONW": "https://oshi.at/VhBU/UKur.png",  # wall_outer_nw
+    "WFR": "https://oshi.at/vWHW/dDcu.png",  # wall front right
+    "WTR": "https://oshi.at/QpWg/Mfxv.png",  # wall top right
     "DK": "https://oshi.at/GWHj/wtCk.png",  # darkness
     "WMB": "https://oshi.at/GoQE/zfAw.png",  # wall missing brick
+    "BOX": "https://oshi.at/mrGw/AKFU.png",  # box
+    "DR": "https://oshi.at/tryL/kWUA.png",  # darkenss right
+    "DB": "https://oshi.at/Tqmw/rLBW.png",  # darkness bottom
+    "T": "https://oshi.at/JGsU/azsD.gif",  # torch
+    "FMN1": "https://oshi.at/uJCc/fPaM.png",  # floor mud n1
+    "FMN2": "https://oshi.at/KLjX/dTIl.png",
+    "FMNE": "https://oshi.at/fzAd/eKgp.png",  # floor mud ne
 }
 
 
@@ -127,10 +139,31 @@ if "level" not in st.session_state:  # or st.session_state["level_change"]:
     st.session_state["level"] = df.values
 
 
-game_objects = f"""<img src="{npc_palladin}" class="player" style="grid-column-start: {st.session_state["player_x"]}; grid-row-start: {st.session_state["player_y"]};"><img src="{skelet}" style="grid-column-start: 42; grid-row-start: 30;"><img src="{cat}" style="grid-column-start: 33; grid-row-start: 3;">"""
+game_objects = f"""
+<img src="{npc_palladin}" class="player" style="grid-column-start: {st.session_state["player_x"]}; grid-row-start: {st.session_state["player_y"]};">
+<img src="{chort}" style="grid-column-start: 42; grid-row-start: 30;">
+<img src="{chort}" style="grid-column-start: 20; grid-row-start: 22;">
+<img src="{cat}" style="grid-column-start: 33; grid-row-start: 3;">"""
 
+boxes = f"""
+<img src="{tileset["BOX"]}" style="grid-column-start: 4; grid-row-start: 17;">
+<img src="{tileset["BOX"]}" style="grid-column-start: 6; grid-row-start: 3;">
+<img src="{tileset["BOX"]}" style="grid-column-start: 37; grid-row-start: 29;">
+"""
 
-html = level_renderer(st.session_state["level"], game_objects)
+voids = f"""
+<img src="{tileset["DR"]}" style="grid-column-start: 47; grid-row-start: 13; grid-column-end:49">
+
+"""
+torches = f"""
+<img src="{tileset["T"]}" style="grid-column-start: 21; grid-row-start: 5">
+<img src="{tileset["T"]}" style="grid-column-start: 19; grid-row-start: 25">
+<img src="{tileset["T"]}" style="grid-column-start: 22; grid-row-start: 25">
+<img src="{tileset["T"]}" style="grid-column-start: 46; grid-row-start: 30">
+<img src="{tileset["T"]}" style="grid-column-start: 33; grid-row-start: 13">
+"""
+
+html = level_renderer(st.session_state["level"], game_objects + boxes + voids + torches)
 
 display_html = st.empty()
 display_html = st.markdown(html, unsafe_allow_html=True)
