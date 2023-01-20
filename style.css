@@ -34,7 +34,7 @@ p {
     /* position: absolute; */
     display: grid;
     grid-template-columns: repeat(50, 16px);
-    grid-template-rows: repeat(50, 16px);
+    grid-template-rows: repeat(40, 16px);
     grid-gap: 0px;
     align-items: flex-end;
 }
@@ -54,4 +54,20 @@ img {
 
 section[tabindex="0"] {
     overflow: hidden;
+}
+
+.console-container {
+    position: relative;
+    /* background-color: darkgrey; */
+    color: grey;
+    font-size: 0.8rem;
+    padding: 10px;
+    border-radius: 5px;
+
+    border: 2px dotted #2a514d;
+    border-top: 3px solid #1e3937;
+    font-family: Arial, Helvetica, sans-serif;
+    /* margin-bottom: 10px; */
+    width: 5rem;
+
 }

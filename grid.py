@@ -164,9 +164,14 @@ torches = f"""
 """
 
 html = level_renderer(st.session_state["level"], game_objects + boxes + voids + torches)
-
 display_html = st.empty()
 display_html = st.markdown(html, unsafe_allow_html=True)
+
+
+st.markdown(
+    '<div class="console-container">Hp: 20/20<br> Exp: 0/30<br> Gold: 0 </div>',
+    unsafe_allow_html=True,
+)
 
 # st.markdown(
 #     f"""
