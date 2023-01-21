@@ -2,6 +2,7 @@ import streamlit as st
 import streamlit.components.v1 as components
 import pandas as pd
 import random
+import numpy as np
 
 # -------------- refrence docs: --------------
 
@@ -50,24 +51,55 @@ chort = "https://oshi.at/AsVN/scbF.gif"
 # ---------------- callbacks ----------------
 
 
+def player_can_move(logic_layer, x, y):
+    if tileset_movable[logic_layer[x - 1, y - 1]] == True:
+        return True
+    else:
+        pass
+
+
 def left_callback():
-    st.session_state["player_x"] -= 1
-    st.session_state.left_clicked = True
+
+    if player_can_move(
+        st.session_state[
+            "level"
+        ],  # note the different order of x and y. Done to confuse myself in the future.
+        # good luck future me
+        st.session_state["player_y"],
+        st.session_state["player_x"] - 1,
+    ):
+        st.session_state["player_x"] -= 1
+        st.session_state.left_clicked = True
 
 
 def right_callback():
-    st.session_state["player_x"] += 1
-    st.session_state.right_clicked = True
+    if player_can_move(
+        st.session_state["level"],
+        st.session_state["player_y"],
+        st.session_state["player_x"] + 1,
+    ):
+        st.session_state["player_x"] += 1
+        st.session_state.right_clicked = True
 
 
 def up_callback():
-    st.session_state["player_y"] -= 1
-    st.session_state.up_clicked = True
+    if player_can_move(
+        st.session_state["level"],
+        st.session_state["player_y"] - 1,
+        st.session_state["player_x"],
+    ):
+        st.session_state["player_y"] -= 1
+        st.session_state.up_clicked = True
 
 
 def down_callback():
-    st.session_state["player_y"] += 1
-    st.session_state.down_clicked = True
+    if player_can_move(
+        st.session_state["level"],
+        st.session_state["player_y"] + 1,
+        st.session_state["player_x"],
+    ):
+        st.session_state["player_y"] += 1
+        st.session_state.down_clicked = True
 
 
 # ---------------- CSS ----------------
@@ -110,6 +142,34 @@ tileset = {
     "FMNE": "https://oshi.at/fzAd/eKgp.png",  # floor mud ne
 }
 
+tileset_movable = {
+    "@": True,
+    "W": False,
+    "FP": True,  # floor_plain
+    # "FP": "https://oshi.at/PQkn/ExtR.png",  # floor 1 tilset 2
+    "CAT": True,
+    "M": True,  # monster, skeleton
+    "FS": True,
+    "E": False,
+    "FE3": False,  # floor_edge_3
+    "WON": False,  # wall outer n
+    "WOE": False,  # wall outer e
+    "WONE": False,  # wall outer ne
+    "WOW": False,  # wall outer w
+    "WONW": False,  # wall_outer_nw
+    "WFR": False,  # wall front right
+    "WTR": False,  # wall top right
+    "DK": False,  # darkness
+    "WMB": False,  # wall missing brick
+    "BOX": False,  # box
+    "DR": False,  # darkenss right
+    "DB": False,  # darkness bottom
+    "T": False,  # torch
+    "FMN1": True,  # floor mud n1
+    "FMN2": True,
+    "FMNE": True,  # floor mud ne
+}
+
 
 def level_renderer(df, game_objects):
     i = 0
@@ -146,6 +206,7 @@ df = fetch_data("test.csv")
 if "level" not in st.session_state:  # or st.session_state["level_change"]:
     st.session_state["level"] = df.values
 
+
 # this is very subotimal change to classes
 
 game_objects = f"""
@@ -175,7 +236,7 @@ torches = f"""
 html = level_renderer(st.session_state["level"], game_objects + boxes + voids + torches)
 display_html = st.empty()
 display_html = st.markdown(html, unsafe_allow_html=True)
-
+# st.write(st.session_state["level"])
 
 st.markdown(
     '<div class="console-container">Hp: 20/20<br> Exp: 0/30<br> Gold: 0 </div>',
