@@ -40,6 +40,9 @@ if "up_clicked" not in st.session_state:
 if "down_clicked" not in st.session_state:
     st.session_state["down_clicked"] = False
 
+if "steps" not in st.session_state:
+    st.session_state["steps"] = 0
+
 # ---------------- links ----------------
 
 cat = "https://oshi.at/rSxZ/Znvx.gif"
@@ -70,6 +73,7 @@ def left_callback():
     ):
         st.session_state["player_x"] -= 1
         st.session_state.left_clicked = True
+        st.session_state["steps"] += 1
 
 
 def right_callback():
@@ -80,6 +84,7 @@ def right_callback():
     ):
         st.session_state["player_x"] += 1
         st.session_state.right_clicked = True
+        st.session_state["steps"] += 1
 
 
 def up_callback():
@@ -90,6 +95,7 @@ def up_callback():
     ):
         st.session_state["player_y"] -= 1
         st.session_state.up_clicked = True
+        st.session_state["steps"] += 1
 
 
 def down_callback():
@@ -100,6 +106,7 @@ def down_callback():
     ):
         st.session_state["player_y"] += 1
         st.session_state.down_clicked = True
+        st.session_state["steps"] += 1
 
 
 # ---------------- CSS ----------------
@@ -273,7 +280,7 @@ with st.sidebar:
 
 
 st.markdown(
-    f'<div class="bpad" id="bpad">HP: 20/20<div>Exp: 0/30</div></div>',
+    f'<div class="bpad" id="bpad">HP: 20/20<div>Exp: 0/30</div><div>Steps: {st.session_state["steps"]}</div></div>',
     unsafe_allow_html=True,
 )
 
