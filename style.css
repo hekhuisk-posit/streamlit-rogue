@@ -48,12 +48,14 @@ img {
 .player {
     z-index: 99999;
 
-
     /* transform: scale(0.8) */
 }
 
 section[tabindex="0"] {
     overflow: hidden;
+    scroll-padding: 60px;
+    /* scroll-margin: 60px; */
+    /* no scroll */
 }
 
 .console-container {
@@ -70,4 +72,20 @@ section[tabindex="0"] {
     /* margin-bottom: 10px; */
     width: 5rem;
 
+}
+
+
+.bpad {
+    padding-left: 10px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    max-height: 200px;
+    background-color: #0f090c;
+    color: #ccc;
+    width: 100%;
+    overflow: auto;
+    font-family: monospace;
+    border-top: 3px solid #1e3937;
 }

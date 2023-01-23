@@ -209,8 +209,10 @@ if "level" not in st.session_state:  # or st.session_state["level_change"]:
 
 # this is very subotimal change to classes
 
+player = f"""
+<img src="{npc_palladin}" id="player" class="player" style="grid-column-start: {st.session_state["player_x"]}; grid-row-start: {st.session_state["player_y"]};">"""
+
 game_objects = f"""
-<img src="{npc_palladin}" class="player" style="grid-column-start: {st.session_state["player_x"]}; grid-row-start: {st.session_state["player_y"]};">
 <img src="{chort}" style="grid-column-start: 42; grid-row-start: 30;">
 <img src="{chort}" style="grid-column-start: 20; grid-row-start: 22;">
 <img src="{cat}" style="grid-column-start: 33; grid-row-start: 3;">"""
@@ -233,15 +235,17 @@ torches = f"""
 <img src="{tileset["T"]}" style="grid-column-start: 33; grid-row-start: 13">
 """
 
-html = level_renderer(st.session_state["level"], game_objects + boxes + voids + torches)
+html = level_renderer(
+    st.session_state["level"], player + game_objects + boxes + voids + torches
+)
 display_html = st.empty()
 display_html = st.markdown(html, unsafe_allow_html=True)
 # st.write(st.session_state["level"])
 
-st.markdown(
-    '<div class="console-container">Hp: 20/20<br> Exp: 0/30<br> Gold: 0 </div>',
-    unsafe_allow_html=True,
-)
+# st.markdown(
+#     '<div class="console-container">Hp: 20/20<br> Exp: 0/30<br> Gold: 0 </div>',
+#     unsafe_allow_html=True,
+# )
 
 
 # ------------ sidebar for backup input ---------------------------
@@ -267,6 +271,13 @@ with st.sidebar:
 
 # ------------ JS for catching input ---------------------------
 
+
+st.markdown(
+    f'<div class="bpad" id="bpad">HP: 20/20<div>Exp: 0/30</div></div>',
+    unsafe_allow_html=True,
+)
+
+
 components.html(
     """
 <script>
@@ -280,15 +291,19 @@ doc.addEventListener('keydown', function(e) {
 switch (e.keyCode) {
     case 37: // (37 = left arrow)
         left_button.click();
+        window.parent.document.getElementById('player').scrollIntoView();
         break;
     case 39: // (39 = right arrow)
         right_button.click();
+        window.parent.document.getElementById('player').scrollIntoView(); 
         break;
     case 38: // (39 = right arrow)
         up_button.click();
+        window.parent.document.getElementById('player').scrollIntoView();
         break;
     case 40: // (39 = right arrow)
         down_button.click();
+        window.parent.document.getElementById('player').scrollIntoView();   
         break;
 }
 });
