@@ -45,7 +45,7 @@ if "steps" not in st.session_state:
 
 # ---------------- links ----------------
 
-cat = "https://oshi.at/rSxZ/Znvx.gif"
+cat = "https://raw.githubusercontent.com/TomJohnH/streamlit-rogue/main/graphics/other/cat.gif"
 player = "https://raw.githubusercontent.com/TomJohnH/streamlit-rogue/main/graphics/other/player.gif"
 chort = "https://raw.githubusercontent.com/TomJohnH/streamlit-rogue/main/graphics/other/monster.gif"
 
@@ -124,7 +124,7 @@ tileset = {
     "W": "https://thumbs2.imgbox.com/10/db/7zaxbIP8_t.png",  # wall
     "FP": "https://thumbs2.imgbox.com/29/22/5rTLr6WH_t.png",  # floor_plain
     # "FP": "https://oshi.at/PQkn/ExtR.png",  # floor 1 tilset 2
-    "CAT": "https://oshi.at/rSxZ/Znvx.gif",  # cat
+    "CAT": "https://raw.githubusercontent.com/TomJohnH/streamlit-rogue/main/graphics/other/cat.gif",  # cat
     "M": "https://raw.githubusercontent.com/TomJohnH/streamlit-rogue/main/graphics/other/monster.gif",  # monster, skeleton
     "FS": "https://raw.githubusercontent.com/TomJohnH/streamlit-rogue/main/graphics/tileset/floor_stain_1.png",
     "E": "data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==",
