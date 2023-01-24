@@ -75,6 +75,9 @@ section[tabindex="0"] {
 }
 
 
+
+
+
 .bpad {
     padding-left: 10px;
     position: fixed;
@@ -88,4 +91,23 @@ section[tabindex="0"] {
     overflow: auto;
     font-family: monospace;
     border-top: 3px solid #1e3937;
+}
+
+.bbutton-left {
+    padding-left: 10px;
+    position: fixed;
+    bottom: 6rem;
+    left: 0;
+    right: 0;
+
+
+}
+
+.bbutton-right {
+    padding-left: 10px;
+    position: fixed;
+    bottom: 8rem;
+    left: 0;
+    right: 0;
+
 }

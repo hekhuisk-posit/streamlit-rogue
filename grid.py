@@ -245,7 +245,9 @@ html = level_renderer(
 )
 display_html = st.empty()
 display_html = st.markdown(html, unsafe_allow_html=True)
-# st.write(st.session_state["level"])
+
+st.button("<-", on_click=left_callback)
+st.button("->", on_click=right_callback)
 
 # st.markdown(
 #     '<div class="console-container">Hp: 20/20<br> Exp: 0/30<br> Gold: 0 </div>',
@@ -274,14 +276,18 @@ with st.sidebar:
     with middle_col:
         st.button("DOWN", on_click=down_callback, key="DOWN")
 
-# ------------ JS for catching input ---------------------------
 
+# ------------ Console div  ---------------------------
 
 st.markdown(
-    f'<div class="bpad" id="bpad">HP: 20/20<div>Exp: 0/30</div><div>Steps: {st.session_state["steps"]}</div></div>',
+    f"""
+    <div class="bpad" id="bpad">HP: 20/20<div>Exp: 0/30</div><div>Steps: {st.session_state["steps"]}</div></div>""",
     unsafe_allow_html=True,
 )
 
+# ------------ JS for catching input ---------------------------
+
+#
 
 components.html(
     """
@@ -292,6 +298,12 @@ const left_button = buttons.find(el => el.innerText === 'LEFT');
 const right_button = buttons.find(el => el.innerText === 'RIGHT');
 const up_button = buttons.find(el => el.innerText === String.fromCharCode(160)+'UP'+String.fromCharCode(160));
 const down_button = buttons.find(el => el.innerText === 'DOWN');
+
+Array.from(window.parent.document.querySelectorAll('button[kind=secondary]')).find(el => el.innerText === '<-').classList.add('bbutton-left');
+Array.from(window.parent.document.querySelectorAll('button[kind=secondary]')).find(el => el.innerText === '->').classList.add('bbutton-right');
+
+
+
 doc.addEventListener('keydown', function(e) {
 switch (e.keyCode) {
     case 37: // (37 = left arrow)
