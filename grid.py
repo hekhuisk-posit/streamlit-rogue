@@ -46,10 +46,8 @@ if "steps" not in st.session_state:
 # ---------------- links ----------------
 
 cat = "https://oshi.at/rSxZ/Znvx.gif"
-npc_palladin = "https://oshi.at/ZMUu/avRY.gif"
-skelet = "https://oshi.at/HXMd/VQUl.gif"
-demon = "https://oshi.at/BrFn/dMIx.gif"
-chort = "https://oshi.at/AsVN/scbF.gif"
+player = "https://raw.githubusercontent.com/TomJohnH/streamlit-rogue/main/graphics/other/player.gif"
+chort = "https://raw.githubusercontent.com/TomJohnH/streamlit-rogue/main/graphics/other/monster.gif"
 
 # ---------------- callbacks ----------------
 
@@ -127,26 +125,26 @@ tileset = {
     "FP": "https://thumbs2.imgbox.com/29/22/5rTLr6WH_t.png",  # floor_plain
     # "FP": "https://oshi.at/PQkn/ExtR.png",  # floor 1 tilset 2
     "CAT": "https://oshi.at/rSxZ/Znvx.gif",  # cat
-    "M": "https://oshi.at/HXMd/VQUl.gif",  # monster, skeleton
-    "FS": "https://thumbs2.imgbox.com/99/26/4m4rKZCS_t.png",
+    "M": "https://raw.githubusercontent.com/TomJohnH/streamlit-rogue/main/graphics/other/monster.gif",  # monster, skeleton
+    "FS": "https://raw.githubusercontent.com/TomJohnH/streamlit-rogue/main/graphics/tileset/floor_stain_1.png",
     "E": "data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==",
-    "FE3": "https://oshi.at/KrDD/wYos.png",  # floor_edge_3
-    "WON": "https://oshi.at/QwVn/Lotr.png",  # wall outer n
-    "WOE": "https://oshi.at/zesd/TsDF.png",  # wall outer e
-    "WONE": "https://oshi.at/qhqi/XliL.png",  # wall outer ne
-    "WOW": "https://oshi.at/ErrD/vUVT.png",  # wall outer w
-    "WONW": "https://oshi.at/VhBU/UKur.png",  # wall_outer_nw
-    "WFR": "https://oshi.at/vWHW/dDcu.png",  # wall front right
+    "FE3": "https://raw.githubusercontent.com/TomJohnH/streamlit-rogue/main/graphics/tileset/floor_edge_3.png",  # floor_edge_3
+    "WON": "https://raw.githubusercontent.com/TomJohnH/streamlit-rogue/main/graphics/tileset/Wall_outer_n.png",  # Wall_outer_n
+    "WOE": "https://raw.githubusercontent.com/TomJohnH/streamlit-rogue/main/graphics/tileset/Wall_outer_e.png",  # Wall_outer_e
+    "WONE": "https://raw.githubusercontent.com/TomJohnH/streamlit-rogue/main/graphics/tileset/Wall_outer_ne.png",  # Wall_outer_ne
+    "WOW": "https://raw.githubusercontent.com/TomJohnH/streamlit-rogue/main/graphics/tileset/Wall_outer_w.png",  # Wall_outer_w
+    "WONW": "https://raw.githubusercontent.com/TomJohnH/streamlit-rogue/main/graphics/tileset/Wall_outer_nw.png",  # wall_outer_nw
+    "WFR": "https://raw.githubusercontent.com/TomJohnH/streamlit-rogue/main/graphics/tileset/Wall_front_right.png",  # wall front right
     "WTR": "https://oshi.at/QpWg/Mfxv.png",  # wall top right
-    "DK": "https://oshi.at/GWHj/wtCk.png",  # darkness
-    "WMB": "https://oshi.at/GoQE/zfAw.png",  # wall missing brick
-    "BOX": "https://oshi.at/mrGw/AKFU.png",  # box
-    "DR": "https://oshi.at/tryL/kWUA.png",  # darkenss right
-    "DB": "https://oshi.at/Tqmw/rLBW.png",  # darkness bottom
-    "T": "https://oshi.at/JGsU/azsD.gif",  # torch
-    "FMN1": "https://oshi.at/uJCc/fPaM.png",  # floor mud n1
-    "FMN2": "https://oshi.at/KLjX/dTIl.png",
-    "FMNE": "https://oshi.at/fzAd/eKgp.png",  # floor mud ne
+    # "DK": "https://raw.githubusercontent.com/TomJohnH/streamlit-rogue/main/graphics/tileset/wall_missing_brick_2.png",  # darkness
+    "WMB": "https://raw.githubusercontent.com/TomJohnH/streamlit-rogue/main/graphics/tileset/wall_missing_brick_2.png",  # wall missing brick 1
+    "BOX": "https://raw.githubusercontent.com/TomJohnH/streamlit-rogue/main/graphics/tileset/box.png",  # box
+    "DR": "https://raw.githubusercontent.com/TomJohnH/streamlit-rogue/main/graphics/tileset/darkness_right.png",  # darkenss right
+    "DB": "https://raw.githubusercontent.com/TomJohnH/streamlit-rogue/main/graphics/tileset/darkness_bottom.png",  # darkness bottom
+    "T": "https://raw.githubusercontent.com/TomJohnH/streamlit-rogue/main/graphics/tileset/torch_1.png",  # torch
+    "FMN1": "https://raw.githubusercontent.com/TomJohnH/streamlit-rogue/main/graphics/tileset/floor_mud_n_1.png",  # floor_mud_n_1
+    "FMN2": "https://raw.githubusercontent.com/TomJohnH/streamlit-rogue/main/graphics/tileset/floor_mud_n_2.png",  # floor_mud_n_2
+    "FMNE": "https://raw.githubusercontent.com/TomJohnH/streamlit-rogue/main/graphics/tileset/floor_mud_ne.png",  # floor_mud_ne
 }
 
 tileset_movable = {
@@ -217,7 +215,7 @@ if "level" not in st.session_state:  # or st.session_state["level_change"]:
 # this is very subotimal change to classes
 
 player = f"""
-<img src="{npc_palladin}" id="player" class="player" style="grid-column-start: {st.session_state["player_x"]}; grid-row-start: {st.session_state["player_y"]};">"""
+<img src="{player}" id="player" class="player" style="grid-column-start: {st.session_state["player_x"]}; grid-row-start: {st.session_state["player_y"]};">"""
 
 game_objects = f"""
 <img src="{chort}" style="grid-column-start: 42; grid-row-start: 30;">
