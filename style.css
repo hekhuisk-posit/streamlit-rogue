@@ -94,6 +94,7 @@ section[tabindex="0"] {
 }
 
 .bbutton-left {
+    box-sizing: border-box;
     padding-left: 10px;
     position: fixed;
     bottom: 8rem;
@@ -106,6 +107,7 @@ section[tabindex="0"] {
 }
 
 .bbutton-right {
+    box-sizing: border-box;
     padding-left: 10px;
     position: fixed;
     bottom: 8rem;
@@ -117,6 +119,7 @@ section[tabindex="0"] {
 }
 
 .bbutton-up {
+    box-sizing: border-box;
     padding-left: 10px;
     position: fixed;
     bottom: 6rem;
@@ -129,6 +132,7 @@ section[tabindex="0"] {
 }
 
 .bbutton-down {
+    box-sizing: border-box;
     padding-left: 10px;
     position: fixed;
     bottom: 6rem;
