@@ -246,8 +246,10 @@ html = level_renderer(
 display_html = st.empty()
 display_html = st.markdown(html, unsafe_allow_html=True)
 
-st.button("<-", on_click=left_callback)
-st.button("->", on_click=right_callback)
+st.button("L", on_click=left_callback)
+st.button("R", on_click=right_callback)
+st.button("U", on_click=up_callback)
+st.button("D", on_click=down_callback)
 
 # st.markdown(
 #     '<div class="console-container">Hp: 20/20<br> Exp: 0/30<br> Gold: 0 </div>',
@@ -299,9 +301,15 @@ const right_button = buttons.find(el => el.innerText === 'RIGHT');
 const up_button = buttons.find(el => el.innerText === String.fromCharCode(160)+'UP'+String.fromCharCode(160));
 const down_button = buttons.find(el => el.innerText === 'DOWN');
 
-Array.from(window.parent.document.querySelectorAll('button[kind=secondary]')).find(el => el.innerText === '<-').classList.add('bbutton-left');
-Array.from(window.parent.document.querySelectorAll('button[kind=secondary]')).find(el => el.innerText === '->').classList.add('bbutton-right');
+const left_button2 = buttons.find(el => el.innerText === 'L');
+const right_button2 = buttons.find(el => el.innerText === 'R');
+const up_button2 = buttons.find(el => el.innerText === 'U');
+const down_button2 = buttons.find(el => el.innerText === 'D');
 
+Array.from(window.parent.document.querySelectorAll('button[kind=secondary]')).find(el => el.innerText === 'L').classList.add('bbutton-left');
+Array.from(window.parent.document.querySelectorAll('button[kind=secondary]')).find(el => el.innerText === 'R').classList.add('bbutton-right');
+Array.from(window.parent.document.querySelectorAll('button[kind=secondary]')).find(el => el.innerText === 'U').classList.add('bbutton-up');
+Array.from(window.parent.document.querySelectorAll('button[kind=secondary]')).find(el => el.innerText === 'D').classList.add('bbutton-down');
 
 
 doc.addEventListener('keydown', function(e) {
@@ -324,6 +332,53 @@ switch (e.keyCode) {
         break;
 }
 });
+
+
+
+left_button.addEventListener("click",function() {
+  window.parent.document.getElementById('player').scrollIntoView();
+  console.log("left")
+});
+
+right_button.addEventListener("click",function() {
+  window.parent.document.getElementById('player').scrollIntoView();
+  console.log("right")
+});
+
+left_button2.addEventListener("click",function() {
+  window.parent.document.getElementById('player').scrollIntoView();
+  console.log("left")
+});
+
+right_button2.addEventListener("click",function() {
+  window.parent.document.getElementById('player').scrollIntoView();
+  console.log("right")
+});
+
+up_button.addEventListener("click",function() {
+  window.parent.document.getElementById('player').scrollIntoView();
+  console.log("up")
+});
+
+down_button.addEventListener("click",function() {
+  window.parent.document.getElementById('player').scrollIntoView();
+  console.log("down")
+});
+
+up_button2.addEventListener("click",function() {
+  window.parent.document.getElementById('player').scrollIntoView();
+  console.log("up")
+});
+
+down_button2.addEventListener("click",function() {
+  window.parent.document.getElementById('player').scrollIntoView();
+  console.log("down")
+});
+
+
+
+
+
 </script>
 """,
     height=0,
