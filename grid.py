@@ -236,8 +236,6 @@ if "level" not in st.session_state:  # or st.session_state["level_change"]:
 if "player" not in st.session_state:
     st.session_state["player"] = character(4, 5, "player.gif")
 
-st.session_state["player"].x
-
 player = f"""
 <img src="{player}" id="player" class="player" style="grid-column-start: {st.session_state["player"].x}; grid-row-start: {st.session_state["player"].y};">"""
 
@@ -271,8 +269,17 @@ torches = f"""
 <img src="{tileset["T"]}" style="grid-column-start: 33; grid-row-start: 13">
 """
 
+if st.session_state["player"].x == 10 and st.session_state["player"].y == 5:
+    text_boxes = f"""<div class="container_text" style="position: relative; grid-column-start: 10; grid-row-start: 4; grid-column-end: 14;"><img src="https://oshi.at/CdmB/LqME.png"><div style="position: absolute; top: 40%;left: 50%;transform: translate(-50%, -50%);">What?</div></div>"""
+elif st.session_state["player"].x == 16 and st.session_state["player"].y == 11:
+    text_boxes = f"""<div class="container_text" style="position: relative; grid-column-start: 16; grid-row-start: 10; grid-column-end: 20;"><img src="https://oshi.at/CdmB/LqME.png"><div style="position: absolute; top: 40%;left: 50%;transform: translate(-50%, -50%);">Strange</div></div>"""
+else:
+    text_boxes = ""
+
+
 html = level_renderer(
-    st.session_state["level"], player + game_objects + boxes + voids + torches
+    st.session_state["level"],
+    player + game_objects + boxes + voids + torches + text_boxes,
 )
 display_html = st.empty()
 display_html = st.markdown(html, unsafe_allow_html=True)
@@ -314,7 +321,7 @@ with st.sidebar:
 
 st.markdown(
     f"""
-    <div class="bpad" id="bpad">HP: 20/20<div>Exp: 0/30</div><div>Steps: {st.session_state["steps"]}</div></div>""",
+    <div class="bpad" id="bpad">HP: 20/20 | Exp: 0/30 | Steps: {st.session_state["steps"]}</div>""",
     unsafe_allow_html=True,
 )
 
