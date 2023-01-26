@@ -26,7 +26,7 @@ def fetch_data(level_name):
     return df
 
 
-class Monster:
+class character:
     def __init__(self, x, y, file):
         self.x = x
         self.y = y
@@ -85,10 +85,10 @@ def left_callback():
             "level"
         ],  # note the different order of x and y. Done to confuse myself in the future.
         # good luck future me
-        st.session_state["player_y"],
-        st.session_state["player_x"] - 1,
+        st.session_state["player"].y,
+        st.session_state["player"].x - 1,
     ):
-        st.session_state["player_x"] -= 1
+        st.session_state["player"].x -= 1
         st.session_state.left_clicked = True
         st.session_state["steps"] += 1
 
@@ -96,10 +96,10 @@ def left_callback():
 def right_callback():
     if character_can_move(
         st.session_state["level"],
-        st.session_state["player_y"],
-        st.session_state["player_x"] + 1,
+        st.session_state["player"].y,
+        st.session_state["player"].x + 1,
     ):
-        st.session_state["player_x"] += 1
+        st.session_state["player"].x += 1
         st.session_state.right_clicked = True
         st.session_state["steps"] += 1
 
@@ -107,10 +107,10 @@ def right_callback():
 def up_callback():
     if character_can_move(
         st.session_state["level"],
-        st.session_state["player_y"] - 1,
-        st.session_state["player_x"],
+        st.session_state["player"].y - 1,
+        st.session_state["player"].x,
     ):
-        st.session_state["player_y"] -= 1
+        st.session_state["player"].y -= 1
         st.session_state.up_clicked = True
         st.session_state["steps"] += 1
 
@@ -118,10 +118,10 @@ def up_callback():
 def down_callback():
     if character_can_move(
         st.session_state["level"],
-        st.session_state["player_y"] + 1,
-        st.session_state["player_x"],
+        st.session_state["player"].y + 1,
+        st.session_state["player"].x,
     ):
-        st.session_state["player_y"] += 1
+        st.session_state["player"].y += 1
         st.session_state.down_clicked = True
         st.session_state["steps"] += 1
 
@@ -130,11 +130,11 @@ def down_callback():
 
 local_css("style.css")
 
-if "player_x" not in st.session_state:
-    st.session_state["player_x"] = 4
+# if "player_x" not in st.session_state:
+#     st.session_state["player_x"] = 4
 
-if "player_y" not in st.session_state:
-    st.session_state["player_y"] = 5
+# if "player_y" not in st.session_state:
+#     st.session_state["player_y"] = 5
 
 # ---------------- tilset dictionary ----------------
 
@@ -233,12 +233,17 @@ if "level" not in st.session_state:  # or st.session_state["level_change"]:
 
 # this is very subotimal change to classes
 
+if "player" not in st.session_state:
+    st.session_state["player"] = character(4, 5, "player.gif")
+
+st.session_state["player"].x
+
 player = f"""
-<img src="{player}" id="player" class="player" style="grid-column-start: {st.session_state["player_x"]}; grid-row-start: {st.session_state["player_y"]};">"""
+<img src="{player}" id="player" class="player" style="grid-column-start: {st.session_state["player"].x}; grid-row-start: {st.session_state["player"].y};">"""
 
 
-chort1 = Monster(42, 30, "monster.gif")
-chort2 = Monster(20, 22, "monster.gif")
+chort1 = character(42, 30, "monster.gif")
+chort2 = character(20, 22, "monster.gif")
 
 
 game_objects = (
