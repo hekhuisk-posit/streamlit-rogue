@@ -26,6 +26,25 @@ def fetch_data(level_name):
     return df
 
 
+class Monster:
+    def __init__(self, x, y, file):
+        self.x = x
+        self.y = y
+        self.file = (
+            "https://raw.githubusercontent.com/TomJohnH/streamlit-rogue/main/graphics/other/"
+            + file
+        )
+        self.html = (
+            "<img src='"
+            + str(self.file)
+            + "' style='grid-column-start: "
+            + str(self.x)
+            + "; grid-row-start: "
+            + str(self.y)
+            + ";'>"
+        )
+
+
 # ---------------- initiat session states ----------------
 
 if "left_clicked" not in st.session_state:
@@ -52,7 +71,7 @@ chort = "https://raw.githubusercontent.com/TomJohnH/streamlit-rogue/main/graphic
 # ---------------- callbacks ----------------
 
 
-def player_can_move(logic_layer, x, y):
+def character_can_move(logic_layer, x, y):
     if tileset_movable[logic_layer[x - 1, y - 1]] == True:
         return True
     else:
@@ -61,7 +80,7 @@ def player_can_move(logic_layer, x, y):
 
 def left_callback():
 
-    if player_can_move(
+    if character_can_move(
         st.session_state[
             "level"
         ],  # note the different order of x and y. Done to confuse myself in the future.
@@ -75,7 +94,7 @@ def left_callback():
 
 
 def right_callback():
-    if player_can_move(
+    if character_can_move(
         st.session_state["level"],
         st.session_state["player_y"],
         st.session_state["player_x"] + 1,
@@ -86,7 +105,7 @@ def right_callback():
 
 
 def up_callback():
-    if player_can_move(
+    if character_can_move(
         st.session_state["level"],
         st.session_state["player_y"] - 1,
         st.session_state["player_x"],
@@ -97,7 +116,7 @@ def up_callback():
 
 
 def down_callback():
-    if player_can_move(
+    if character_can_move(
         st.session_state["level"],
         st.session_state["player_y"] + 1,
         st.session_state["player_x"],
@@ -217,10 +236,17 @@ if "level" not in st.session_state:  # or st.session_state["level_change"]:
 player = f"""
 <img src="{player}" id="player" class="player" style="grid-column-start: {st.session_state["player_x"]}; grid-row-start: {st.session_state["player_y"]};">"""
 
-game_objects = f"""
-<img src="{chort}" style="grid-column-start: 42; grid-row-start: 30;">
-<img src="{chort}" style="grid-column-start: 20; grid-row-start: 22;">
+
+chort1 = Monster(42, 30, "monster.gif")
+chort2 = Monster(20, 22, "monster.gif")
+
+
+game_objects = (
+    chort1.html
+    + chort2.html
+    + f"""
 <img src="{cat}" style="grid-column-start: 33; grid-row-start: 3;">"""
+)
 
 boxes = f"""
 <img src="{tileset["BOX"]}" style="grid-column-start: 4; grid-row-start: 17;">
