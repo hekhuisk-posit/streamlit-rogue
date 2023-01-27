@@ -2,6 +2,7 @@ import streamlit as st
 import streamlit.components.v1 as components
 import pandas as pd
 import random
+from random import randrange
 import numpy as np
 
 # -------------- refrence docs: --------------
@@ -34,7 +35,10 @@ class character:
             "https://raw.githubusercontent.com/TomJohnH/streamlit-rogue/main/graphics/other/"
             + file
         )
-        self.html = (
+
+    @property
+    def html(self):
+        return (
             "<img src='"
             + str(self.file)
             + "' style='grid-column-start: "
@@ -92,8 +96,12 @@ def left_callback():
         st.session_state.left_clicked = True
         st.session_state["steps"] += 1
 
+    random_move("monster1")
+    random_move("monster2")
+
 
 def right_callback():
+    # player movement
     if character_can_move(
         st.session_state["level"],
         st.session_state["player"].y,
@@ -102,6 +110,9 @@ def right_callback():
         st.session_state["player"].x += 1
         st.session_state.right_clicked = True
         st.session_state["steps"] += 1
+
+    random_move("monster1")
+    random_move("monster2")
 
 
 def up_callback():
@@ -114,6 +125,9 @@ def up_callback():
         st.session_state.up_clicked = True
         st.session_state["steps"] += 1
 
+    random_move("monster1")
+    random_move("monster2")
+
 
 def down_callback():
     if character_can_move(
@@ -124,6 +138,45 @@ def down_callback():
         st.session_state["player"].y += 1
         st.session_state.down_clicked = True
         st.session_state["steps"] += 1
+
+    random_move("monster1")
+    random_move("monster2")
+
+
+# ---------------- functions ----------------
+
+
+def random_move(movable_object):
+    rnd_move = randrange(100)
+    # st.write("random_move" + str(rnd_move))
+    if rnd_move < 25:
+        if character_can_move(
+            st.session_state["level"],
+            st.session_state[movable_object].y,
+            st.session_state[movable_object].x + 1,
+        ):
+            st.session_state[movable_object].x += 1
+    if rnd_move >= 25 and rnd_move < 50:
+        if character_can_move(
+            st.session_state["level"],
+            st.session_state[movable_object].y,
+            st.session_state[movable_object].x - 1,
+        ):
+            st.session_state[movable_object].x -= 1
+    if rnd_move >= 50 and rnd_move < 75:
+        if character_can_move(
+            st.session_state["level"],
+            st.session_state[movable_object].y + 1,
+            st.session_state[movable_object].x,
+        ):
+            st.session_state[movable_object].y += 1
+    if rnd_move >= 75 and rnd_move < 100:
+        if character_can_move(
+            st.session_state["level"],
+            st.session_state[movable_object].y - 1,
+            st.session_state[movable_object].x,
+        ):
+            st.session_state[movable_object].y -= 1
 
 
 # ---------------- CSS ----------------
@@ -240,13 +293,16 @@ player = f"""
 <img src="{player}" id="player" class="player" style="grid-column-start: {st.session_state["player"].x}; grid-row-start: {st.session_state["player"].y};">"""
 
 
-chort1 = character(42, 30, "monster.gif")
-chort2 = character(20, 22, "monster.gif")
+if "monster1" not in st.session_state:
+    st.session_state["monster1"] = character(42, 30, "monster.gif")
+
+if "monster2" not in st.session_state:
+    st.session_state["monster2"] = character(20, 22, "monster.gif")
 
 
 game_objects = (
-    chort1.html
-    + chort2.html
+    st.session_state["monster1"].html
+    + st.session_state["monster2"].html
     + f"""
 <img src="{cat}" style="grid-column-start: 33; grid-row-start: 3;">"""
 )
