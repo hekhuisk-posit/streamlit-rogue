@@ -71,6 +71,7 @@ if "steps" not in st.session_state:
 cat = "https://raw.githubusercontent.com/TomJohnH/streamlit-rogue/main/graphics/other/cat.gif"
 player = "https://raw.githubusercontent.com/TomJohnH/streamlit-rogue/main/graphics/other/player.gif"
 chort = "https://raw.githubusercontent.com/TomJohnH/streamlit-rogue/main/graphics/other/monster.gif"
+imp = "https://raw.githubusercontent.com/TomJohnH/streamlit-rogue/main/graphics/other/imp.gif"
 
 # ---------------- callbacks ----------------
 
@@ -292,12 +293,13 @@ if "player" not in st.session_state:
 player = f"""
 <img src="{player}" id="player" class="player" style="grid-column-start: {st.session_state["player"].x}; grid-row-start: {st.session_state["player"].y};">"""
 
+# --- monsters constructor ------
 
 if "monster1" not in st.session_state:
     st.session_state["monster1"] = character(42, 30, "monster.gif")
 
 if "monster2" not in st.session_state:
-    st.session_state["monster2"] = character(20, 22, "monster.gif")
+    st.session_state["monster2"] = character(20, 22, "imp.gif")
 
 
 game_objects = (
