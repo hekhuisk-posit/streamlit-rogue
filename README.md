@@ -4,7 +4,10 @@ A proof of concept for using streamlit as a game engine for roguelike role-playi
 
 [rogue-rpg.streamlit.app](https://rogue-rpg.streamlit.app)
 
-Change log:
+*Change log:*
+
+28.01.2023
+- work on the new game engine moved to [https://github.com/TomJohnH/streamlit-dungeon](https://github.com/TomJohnH/streamlit-dungeon)
 
 14.01.2023
 - monsters can now fight with each other
