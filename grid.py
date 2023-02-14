@@ -7,9 +7,18 @@ import numpy as np
 
 # -------------- refrence docs: --------------
 
+# https://www.pythonmorsels.com/making-auto-updating-attribute/
 # https://developer.mozilla.org/en-US/docs/Games/Techniques/Tilemaps
 
-# ------------------------------------------------------------------------
+# ------------------------------------------------------------
+#
+#                  Visual settings and functions
+#
+# ------------------------------------------------------------
+
+st.set_page_config(
+    page_title="The Shadows’s Den 2", page_icon="🗡️", initial_sidebar_state="collapsed"
+)
 
 
 def local_css(file_name):
@@ -17,24 +26,22 @@ def local_css(file_name):
         st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
 
-st.set_page_config(
-    page_title="The Shadows’s Den 2", page_icon="🗡️", initial_sidebar_state="collapsed"
-)
-
-# @st.cache
-def fetch_data(level_name):
-    df = pd.read_csv(level_name, sep=",", header=None)
-    return df
+# ------------------------------------------------------------
+#
+#                        Classes
+#
+# ------------------------------------------------------------
 
 
-class character:
-    def __init__(self, x, y, file):
+class Character:
+    def __init__(self, x, y, file, alive):
         self.x = x
         self.y = y
         self.file = (
             "https://raw.githubusercontent.com/TomJohnH/streamlit-rogue/main/graphics/other/"
             + file
         )
+        self.alive = alive
 
     @property
     def html(self):
@@ -48,6 +55,12 @@ class character:
             + ";'>"
         )
 
+
+# ------------------------------------------------------------
+#
+#                  Variables and constants
+#
+# ------------------------------------------------------------
 
 # ---------------- initiat session states ----------------
 
@@ -73,14 +86,11 @@ player = "https://raw.githubusercontent.com/TomJohnH/streamlit-rogue/main/graphi
 chort = "https://raw.githubusercontent.com/TomJohnH/streamlit-rogue/main/graphics/other/monster.gif"
 imp = "https://raw.githubusercontent.com/TomJohnH/streamlit-rogue/main/graphics/other/imp.gif"
 
-# ---------------- callbacks ----------------
-
-
-def character_can_move(logic_layer, x, y):
-    if tileset_movable[logic_layer[x - 1, y - 1]] == True:
-        return True
-    else:
-        pass
+# ------------------------------------------------------------
+#
+#                        Callbacks
+#
+# ------------------------------------------------------------
 
 
 def left_callback():
@@ -144,7 +154,34 @@ def down_callback():
     random_move("monster2")
 
 
-# ---------------- functions ----------------
+# ------------------------------------------------------------
+#
+#                        Functions
+#
+# ------------------------------------------------------------
+
+
+# ---------------- data fetch ----------------
+
+# @st.cache
+def fetch_data(level_name):
+    df = pd.read_csv(level_name, sep=",", header=None)
+    return df
+
+
+# ---------------- check surroundings ----------------
+
+# this function checks all potential moves
+
+
+def character_can_move(logic_layer, x, y):
+    if tileset_movable[logic_layer[x - 1, y - 1]] == True:
+        return True
+    else:
+        pass
+
+
+# ---------------- random moves ----------------
 
 
 def random_move(movable_object):
@@ -179,6 +216,12 @@ def random_move(movable_object):
         ):
             st.session_state[movable_object].y -= 1
 
+
+# ------------------------------------------------------------
+#
+#                        Graphics engine
+#
+# ------------------------------------------------------------
 
 # ---------------- CSS ----------------
 
@@ -288,7 +331,7 @@ if "level" not in st.session_state:  # or st.session_state["level_change"]:
 # this is very subotimal change to classes
 
 if "player" not in st.session_state:
-    st.session_state["player"] = character(4, 5, "player.gif")
+    st.session_state["player"] = Character(4, 5, "player.gif", True)
 
 player = f"""
 <img src="{player}" id="player" class="player" style="grid-column-start: {st.session_state["player"].x}; grid-row-start: {st.session_state["player"].y};">"""
@@ -296,10 +339,10 @@ player = f"""
 # --- monsters constructor ------
 
 if "monster1" not in st.session_state:
-    st.session_state["monster1"] = character(42, 30, "monster.gif")
+    st.session_state["monster1"] = Character(42, 30, "monster.gif", True)
 
 if "monster2" not in st.session_state:
-    st.session_state["monster2"] = character(20, 22, "imp.gif")
+    st.session_state["monster2"] = Character(20, 22, "imp.gif", True)
 
 
 game_objects = (

@@ -31,7 +31,7 @@ def down_callback():
 # level is an array - please check level renderer for more details
 
 
-@st.cache
+@st.cache_data
 def fetch_data(level_name):
     df = pd.read_csv(level_name, sep=",", header=None)
     return df
